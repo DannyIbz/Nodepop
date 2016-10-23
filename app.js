@@ -13,7 +13,23 @@ var app = express();
 require('./lib/mongoConnection');
 
 // cargamos los modelos
-require('./models/models');
+require('./models/anuncioUsuario');
+
+var mongoose = require('mongoose');
+var anuncio = mongoose.model('Anuncio');
+
+var Anuncio = new anuncio({
+  name: 'Bicicleta',
+  venta: true,
+  precio: 230.16,
+  foto: 'bici1.jpg',
+  tags: ['lifestyle', 'motor']
+});
+
+anuncio.save(function (err, anuncioSaved) {
+  console.log(err, anuncioSaved);
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+//app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -18,5 +18,5 @@ var usuarioSchema = mongoose.Schema({
     clave: String,
 });
 
-var anuncio = mongoose.model('Anuncio', anuncioSchema);
-var usuario = mongoose.model('Usuario', usuarioSchema);
+mongoose.model('Anuncio', anuncioSchema);
+mongoose.model('Usuario', usuarioSchema);
