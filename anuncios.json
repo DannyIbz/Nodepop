@@ -1,0 +1,33 @@
+// Anuncios precargados
+{
+  "anuncios": [
+    {
+      "nombre": "Bicicleta de carreras",
+      "venta": true,
+      "precio": 300,
+      "foto": "bici1.jpg",
+      "tags": ["lifestyle", "motor"]
+    },
+    {
+      "nombre": "Bicicleta señora",
+      "venta": true,
+      "precio": 150,
+      "foto": "bici2.jpg"
+      "tags": ["lifestyle"]
+    },
+    {
+      "nombre": "iPhone 4",
+      "venta": false,
+      "precio": 200,
+      "foto": "iphone4.jpg",
+      "tags": ["work", "mobile"]
+    },
+    {
+      "nombre": "iPhone 5",
+      "venta": true,
+      "precio": 250,
+      "foto": "iphone5.jpg",
+      "tags": ["lifestyle", "work", "mobile"]
+    }
+  ]
+}
