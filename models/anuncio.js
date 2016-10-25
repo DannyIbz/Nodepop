@@ -26,8 +26,11 @@ anuncioSchema.statics.list = function (filter, sort, limit, skip, callBack) {
     });
 };
 
-anuncioSchema.statics.deleteAll = function (callBack) {
-    Borradb.remove({}, function (err) {
+anuncioSchema.statics.deleteAll = function (filter, remove, callBack) {
+    var query = Anuncio.find(filter);
+
+    query.remove(remove);
+    query.exec({}, function (err) {
         if (err) {
             return callBack(err);
         }
@@ -36,5 +39,5 @@ anuncioSchema.statics.deleteAll = function (callBack) {
 };
 
 var Anuncio = mongoose.model('Anuncio', anuncioSchema);
-var Borradb = mongoose.model('Anuncios', anuncioSchema);
+//var Borradb = mongoose.model('Anuncios', anuncioSchema);
 
