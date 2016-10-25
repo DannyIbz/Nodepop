@@ -29,7 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/apiv1/install_db', require('./routes/apiv1/install_db'));
 app.use('/apiv1/creaAnuncio', require('./routes/apiv1/creaAnuncio'));
 
 // catch 404 and forward to error handler
