@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=Nodepop:* nodemon ./bin/www"
+    "run installDB": ""
   },
   "dependencies": {
     "body-parser": "~1.15.1",
