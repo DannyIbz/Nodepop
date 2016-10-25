@@ -11,13 +11,6 @@ var anuncioSchema = mongoose.Schema({
     tags: [String]
 });
 
-// Modelo para los usuarios
-var usuarioSchema = mongoose.Schema({
-    nombre: String,
-    email: String,
-    clave: String,
-});
-
 anuncioSchema.statics.list = function (filter, sort, limit, skip, callBack) {
     var query = Anuncio.find(filter);
 
@@ -33,5 +26,15 @@ anuncioSchema.statics.list = function (filter, sort, limit, skip, callBack) {
     });
 };
 
+anuncioSchema.statics.deleteAll = function (callBack) {
+    Borradb.remove({}, function (err) {
+        if (err) {
+            return callBack(err);
+        }
+        callBack(null);
+    });
+};
+
 var Anuncio = mongoose.model('Anuncio', anuncioSchema);
-mongoose.model('Usuario', usuarioSchema);
+var Borradb = mongoose.model('Anuncios', anuncioSchema);
+

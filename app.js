@@ -13,7 +13,7 @@ var app = express();
 require('./lib/mongoConnection');
 
 // cargamos los modelos
-require('./models/anuncioUsuario');
+require('./models/anuncio');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

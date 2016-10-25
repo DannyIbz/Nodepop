@@ -4,15 +4,16 @@ var express = require('express');
 var router = express.Router;
 
 var mongoose = require('mongoose');
-var borraAnuncio = mongoose.model('Anuncio');
+var Anuncio = mongoose.model('Anuncios');
 
-borraAnuncio.statics.deleteAll = function (callBack) {
-  Anuncio.remove({}, function (err) {
-     if (err) {
-         return next(err);
-     }
-     callBack(null);
-  });
-};
+router.delete('/', function (req, res, next) {
+    Anuncio.deleteAll(function (err, anuncios) {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.json({success: true, anuncios: anuncios});
+    });
+});
 
 module.exports = router;
