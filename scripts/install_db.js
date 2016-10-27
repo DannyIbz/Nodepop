@@ -5,7 +5,12 @@ require('../models/anuncio');
 
 var mongoose = require('mongoose');
 var Anuncio = mongoose.model('Anuncio');
-var lista = require('../anuncios.json');
+
+var listaAnuncios = require('../lib/listaAnuncios');
+var fs = require('fs');
+// instalar async con npm!! <--
+var async = require('async');
+
 
 // Borra la DB
 Anuncio.deleteAll(function (err) {
@@ -16,15 +21,51 @@ Anuncio.deleteAll(function (err) {
     console.log('Base de datos borrada.');
 });
 
-router.post('/', function(req, res, next) {
 
-    var anuncio = new Anuncio(req.body);
+// Lee la lista de anuncios predefinidos en el archivo anuncios.json
+var listaJSON = function (callBack) {
+    var lista = './anuncios.json';
 
-    anuncio.save(function (err, anuncioSaved) {
-        if (err) {
-            next(err);
+    fs.readdir(lista, function (err, anuncios) {
+        if(err){
+            callBack(err);
             return;
         }
-        res.json({success: true, anuncio: anuncioSaved});
+
+        async.concat(anuncios, function iterador (module, next) {
+                listaJSON(module, function (err, data) {
+                    if(err){
+                        next(err);
+                        return;
+                    }
+                    next(null, {modulo: module, data: data});
+                    return;
+                });
+
+            },
+
+            // Callback de async.concat
+            function finalizador (err, modulos) {
+                callBack(null, modulos);
+                return;
+            }
+        );
+
     });
-});
+};
+
+
+// Carga datos del JSON en la DB
+/*
+ router.post('/', function(req, res, next) {
+
+ var anuncio = new Anuncio(req.body);
+
+ anuncio.save(function (err, anuncioSaved) {
+ if (err) {
+ next(err);
+ return;
+ }
+ res.json({success: true, anuncio: anuncioSaved});
+ });
+ });*/
