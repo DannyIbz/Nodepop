@@ -14,19 +14,34 @@ Anuncio.deleteAll(function (err) {
         return;
     }
     console.log('Base de datos borrada.');
+
+    var listaAnuncios = require('../lib/listaAnuncios');
+
+
+    listaAnuncios(function (err, anuncios) {
+        if (err) {
+            console.log(err);
+            next(err);
+            return;
+        }
+
+        console.log(anuncios);
+    });
 });
 
 
 // Carga lista de anuncios predefinidos del archivo anuncios.json a la DB
-var listaAnuncios = require('../lib/listaAnuncios');
+var db = mongoose.connection;
 
-listaAnuncios(function (err, anuncios) {
+db.collection('anuncios', function (err, anuncios) {
     if (err) {
-         console.log(err);
-         next(err);
-         return;
-     }
-console.log(anuncios);
+        console.log('Error', err);
+        return;
+    }
+
+    console.log('4 anuncios cargados en la db.')
+
+    //db.close();
 });
 
 
