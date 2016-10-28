@@ -6,10 +6,8 @@ require('../models/anuncio');
 var mongoose = require('mongoose');
 var Anuncio = mongoose.model('Anuncio');
 
-var listaAnuncios = require('../lib/listaAnuncios');
-var fs = require('fs');
-// instalar async con npm!! <--
-var async = require('async');
+var express = require('express');
+var router = express.Router();
 
 
 // Borra la DB
@@ -22,37 +20,22 @@ Anuncio.deleteAll(function (err) {
 });
 
 
-// Lee la lista de anuncios predefinidos en el archivo anuncios.json
-var listaJSON = function (callBack) {
-    var lista = './anuncios.json';
+// Carga lista de anuncios predefinidos del archivo anuncios.json a la DB
+router.get('/', function (req, res) {
+    var listaAnuncios = require('../lib/listaAnuncios');
 
-    fs.readdir(lista, function (err, anuncios) {
-        if(err){
-            callBack(err);
+    listaAnuncios(function (err, anuncios) {
+        if (err) {
+            console.log(err);
+            next(err);
             return;
         }
 
-        async.concat(anuncios, function iterador (module, next) {
-                listaJSON(module, function (err, data) {
-                    if(err){
-                        next(err);
-                        return;
-                    }
-                    next(null, {modulo: module, data: data});
-                    return;
-                });
+        console.log(anuncios);
 
-            },
-
-            // Callback de async.concat
-            function finalizador (err, modulos) {
-                callBack(null, modulos);
-                return;
-            }
-        );
-
+        res.render('anuncios', {anuncios: anuncios});
     });
-};
+});
 
 
 // Carga datos del JSON en la DB
