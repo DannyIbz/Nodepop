@@ -6,9 +6,6 @@ require('../models/anuncio');
 var mongoose = require('mongoose');
 var Anuncio = mongoose.model('Anuncio');
 
-var express = require('express');
-var router = express.Router();
-
 
 // Borra la DB
 Anuncio.deleteAll(function (err) {
@@ -21,34 +18,23 @@ Anuncio.deleteAll(function (err) {
 
 
 // Carga lista de anuncios predefinidos del archivo anuncios.json a la DB
-router.get('/', function (req, res) {
-    var listaAnuncios = require('../lib/listaAnuncios');
+var listaAnuncios = require('../lib/listaAnuncios');
 
-    listaAnuncios(function (err, anuncios) {
-        if (err) {
-            console.log(err);
-            next(err);
-            return;
-        }
-
-        console.log(anuncios);
-
-        res.render('anuncios', {anuncios: anuncios});
-    });
+listaAnuncios(function (err, anuncios) {
+    if (err) {
+         console.log(err);
+         next(err);
+         return;
+     }
+console.log(anuncios);
 });
 
 
-// Carga datos del JSON en la DB
-/*
- router.post('/', function(req, res, next) {
+// Carga un usuario admin
+/*var auth = require('../lib/authBasic');
 
- var anuncio = new Anuncio(req.body);
+router.use(auth('admin', '12345'));
 
- anuncio.save(function (err, anuncioSaved) {
- if (err) {
- next(err);
- return;
- }
- res.json({success: true, anuncio: anuncioSaved});
- });
- });*/
+router.get('/', function (req, res, next) {
+    res.json({success: true, text: 'zona de admin'});
+});*/
