@@ -35,9 +35,6 @@ anuncioSchema.statics.deleteAll = function (callBack) {
     });
 };
 
-anuncioSchema.statics.json = function (callBack) {
-    
-}
 
 var Anuncio = mongoose.model('Anuncio', anuncioSchema);
 

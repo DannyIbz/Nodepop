@@ -2,15 +2,17 @@
 
 require('../lib/mongoConnection');
 require('../models/anuncio');
+require('../models/usuario');
 
 var mongoose = require('mongoose');
 var Anuncio = mongoose.model('Anuncio');
+var Usuario = mongoose.model('Usuario');
 
 
-// Borra la DB
+// Borra la DB de los anuncios y carga una lista desde el json
 Anuncio.deleteAll(function (err) {
     if (err) {
-        next(err);
+        console.log('Error', err);
         return;
     }
     console.log('Base de datos borrada.');
@@ -20,44 +22,59 @@ Anuncio.deleteAll(function (err) {
 
     listaAnuncios(function (err, anuncios) {
         if (err) {
-            console.log(err);
-            next(err);
+            console.log('Error', err);
             return;
         }
 
         console.log(anuncios);
 
-        var anuncio = new Anuncio();
+        var rows = anuncios.anuncio;
 
-        anuncio.save(function (err, anuncios) {
-            if (err){
-                next(err);
-                return;
-            }
+        for (var i = 0; i < rows.length; i++) {
+            var anuncio = new Anuncio(rows[i]);
 
-            for (var i = 0; i < anuncios.length; i++ ){
-                var anuncio = rows[i];
-                console.log(anuncio.nombre, anuncio.venta, anuncio.precio, anuncio.foto, anuncio.tags);
-            }
-
-            console.log(anuncios);
-        });
-
-        console.log('Lista de anuncios añadida a la DB.');
+            anuncio.save(function (err, anuncioGuardado) {
+                if (err) {
+                    console.log('Error', err);
+                    return;
+                }
+                console.log('Anuncio guardado ' + anuncioGuardado._id + ' con nombre ' + anuncioGuardado.nombre);
+            });
+        }
     });
-
 });
 
+// Borra la DB de usuarios y carga 3 usuarios predefinidos
+Usuario.deleteAll(function (err) {
+    if (err) {
+        console.log('Error', err);
+        return;
+    }
+    console.log('Base de datos borrada.');
 
+    var listaUsuarios = require('../lib/listaUsuarios');
 
+    listaUsuarios(function (err, usuarios) {
+        if (err) {
+            console.log('Error', err);
+            return;
+        }
 
+        console.log(usuarios);
 
+        var rows = usuarios.usuario;
 
-// Carga un usuario admin
-/*var auth = require('../lib/authBasic');
+        for (var i = 0; i < rows.length; i++) {
+            var usuario = new Usuario(rows[i]);
 
-router.use(auth('admin', '12345'));
+            usuario.save(function (err, userGuardado) {
+                if (err) {
+                    console.log('Error', err);
+                    return;
+                }
+                console.log('Usuario creado con nombre: ' + userGuardado.nombre);
+            });
+        }
+    });
+});
 
-router.get('/', function (req, res, next) {
-    res.json({success: true, text: 'zona de admin'});
-});*/

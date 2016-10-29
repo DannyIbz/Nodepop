@@ -1,0 +1,19 @@
+{
+  "usuario": [
+    {
+      "nombre": "admin ",
+      "email": "admin@nodepop.com",
+      "pass": "12345"
+    },
+    {
+      "nombre": "usuario",
+      "email": "user@nodepop.com",
+      "pass": "0000"
+    },
+    {
+      "nombre": "dani",
+      "email": "dani@nodepop.com",
+      "pass": "pass123"
+    }
+  ]
+}

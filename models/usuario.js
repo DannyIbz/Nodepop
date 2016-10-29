@@ -24,4 +24,13 @@ usuarioSchema.statics.list = function (filter, sort, limit, skip, callBack) {
     });
 };
 
-var usuario = mongoose.model('Usuario', usuarioSchema);
+usuarioSchema.statics.deleteAll = function (callBack) {
+    Usuario.remove({}, function (err) {
+        if (err) {
+            return callBack(err);
+        }
+        callBack(null);
+    });
+};
+
+var Usuario = mongoose.model('Usuario', usuarioSchema);
