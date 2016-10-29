@@ -15,8 +15,8 @@ Anuncio.deleteAll(function (err) {
     }
     console.log('Base de datos borrada.');
 
+    // Carga lista de anuncios predefinidos del archivo anuncios.json a la DB
     var listaAnuncios = require('../lib/listaAnuncios');
-
 
     listaAnuncios(function (err, anuncios) {
         if (err) {
@@ -26,23 +26,31 @@ Anuncio.deleteAll(function (err) {
         }
 
         console.log(anuncios);
+
+        var anuncio = new Anuncio();
+
+        anuncio.save(function (err, anuncios) {
+            if (err){
+                next(err);
+                return;
+            }
+
+            for (var i = 0; i < anuncios.length; i++ ){
+                var anuncio = rows[i];
+                console.log(anuncio.nombre, anuncio.venta, anuncio.precio, anuncio.foto, anuncio.tags);
+            }
+
+            console.log(anuncios);
+        });
+
+        console.log('Lista de anuncios añadida a la DB.');
     });
+
 });
 
 
-// Carga lista de anuncios predefinidos del archivo anuncios.json a la DB
-var db = mongoose.connection;
 
-db.collection('anuncios', function (err, anuncios) {
-    if (err) {
-        console.log('Error', err);
-        return;
-    }
 
-    console.log('4 anuncios cargados en la db.')
-
-    //db.close();
-});
 
 
 // Carga un usuario admin
