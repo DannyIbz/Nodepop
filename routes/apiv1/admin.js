@@ -6,18 +6,9 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Usuario = mongoose.model('Usuario');
 
-var authBasic = require('../../lib/authBasic');
-var auth = require('../../lib/listaUsuarios');
+var auth = require('../../lib/authBasic');
 
-router.use('/', function (req, res, next) {
-   var nombre = req.nombre;
-   var pass = req.pass;
-   if (nombre !== auth.nombre || pass !== auth.pass) {
-      console.log('Error! Usuario o contraseña incorrecta');
-      return next;
-   }
-   authBasic(nombre, pass);
-});
+router.use(auth());
 
 router.get('/', function (req, res, next) {
    res.json({success: true, text: 'zona de admin'});
@@ -38,3 +29,5 @@ router.post('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+
