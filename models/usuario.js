@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var usuarioSchema = mongoose.Schema({
     nombre: String,
     email: String,
-    clave: String,
+    pass: String,
 });
 
 usuarioSchema.statics.list = function (filter, sort, limit, skip, callBack) {
