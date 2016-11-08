@@ -6,7 +6,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Usuario = mongoose.model('Usuario');
 
-var auth = require('../../lib/authBasic');
+var auth = require('../../lib/authBasic_');
 
 router.use(auth());
 
