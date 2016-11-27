@@ -1,3 +1,22 @@
+# Entrega de la práctica de DevOps 27.11.2016
+-
+
+Para el despliegue de la aplicación se ha usado los servicios de AWS. Con el objetivo de que la aplicación funcionara correctamente, se ha usado el código de Javier Miguel -> [Nodepop](https://bitbucket.org/agbo/agbo-master-nodejs-practica).
+
+A continuación están los links a los diferentes recursos que sirve la instancia de AWS:
+
+- Servidor de contenido estático (web) -> [doggify.es](https://doggify.es).
+- Aplicación Nodepop -> [nodepop.doggify.es](https://nodepop.doggify.es). Los archivos estáticos son servidos por Nginx.
+- Aplicación Nodechat -> [chat.doggify.es](https://chat.doggify.es). Al igual que la aplicación de Nodepop, los archivos estáticos son servidos por Nginx.
+
+Todas las páginas aquí mostradas incluyen un certificado de seguridad propio obtenido haciendo uso de los servicios de *Let's Encrypt*.
+
+También se hace uso del gestor de procesos PM2 para ninguna de las dos aplicaciones en Node aquí desplegadas dejen de estar en ejecución.
+
+Por último, se sirven los archivos estáticos de la web junto con una cabecera personalizada, tal y como se pide en la práctica.
+
+
+<br>
 # Instrucciones de uso de la API
 -
 
